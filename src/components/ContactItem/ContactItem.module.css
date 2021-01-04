@@ -1,19 +1,8 @@
-.item {
-  position: relative;
-  width: 100%;
-  padding-top: 3px;
-  padding-bottom: 3px;
-}
-
-.item:not(:last-child) {
-  margin-bottom: 6px;
-}
-
-.item span {
+.point {
   margin-right: 7px;
 }
 
-.item button {
+.button {
   position: absolute;
   right: 0;
   top: 50%;

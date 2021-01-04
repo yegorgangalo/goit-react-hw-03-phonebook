@@ -28,6 +28,7 @@ class ContactFormik extends Component {
 
     render() {
         const { expLevel, skills } = this.state;
+
         return <Formik
           initialValues={{
             name: '',

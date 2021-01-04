@@ -31,13 +31,15 @@ class ContactList extends Component {
         return (
           <ul className={s.contactList} >
           {filteredContacts.map(({ id, name, number, experience, skills }) =>
-            <ContactItem
-            key={id}
-            id={id}
-            name={name}
-            number={number}
-            experience={experience}
-            skills={skills} />
+            <li className={s.item} key={id}>
+              <ContactItem
+                id={id}
+                name={name}
+                number={number}
+                experience={experience}
+                skills={skills}
+              />
+            </li>
             )}
           </ul>
         )

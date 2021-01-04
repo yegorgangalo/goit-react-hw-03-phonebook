@@ -10,13 +10,13 @@ class ContactItem extends Component {
         return (
             <Context.Consumer>
                 {({deleteContact}) => {
-                    return (<li className={s.item} >
-                      <span>{name}:</span>
-                      <span>{number},</span>
-                      <span>{experience},</span>
-                      <span>skills: {skills.join(', ')}</span>
-                      <button type="button" onClick={()=> deleteContact(id)}>Delete</button>
-                    </li>)
+                    return (<>
+                      <span className={s.point}>{name}:</span>
+                      <span className={s.point}>{number},</span>
+                      <span className={s.point}>{experience},</span>
+                      <span className={s.point}>skills: {skills.join(', ')}</span>
+                      <button type="button" className={s.button} onClick={()=> deleteContact(id)}>Delete</button>
+                    </>)
                 }}
             </Context.Consumer>
         )
