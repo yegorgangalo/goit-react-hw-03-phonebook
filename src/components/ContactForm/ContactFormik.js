@@ -20,6 +20,12 @@ class ContactFormik extends Component {
         skills: ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React']
     }
 
+    // componentDidMount(){
+    //   window.addEventListener('keydown', e => {
+    //     e.code==='Enter' && e.target.name==='expirience' && ;
+    //   })
+    // }
+
     render() {
         const { expLevel, skills } = this.state;
         return <Formik

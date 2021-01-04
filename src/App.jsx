@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ContactFormik from './components/ContactForm';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList';
+import Context from './components/Context';
 
 class App extends Component {
     static defaultProps = {
@@ -20,8 +21,27 @@ class App extends Component {
     }
 
     state = {
-      contacts: this.props.contacts,
+      // contacts: this.props.contacts,
+      contacts: [],
       filter: '',
+      // deleteContact: (id) => {
+      //   this.setState((prevState) => {
+      //     const withoutDelContactArray = prevState.contacts.filter(contact => contact.id !==id)
+      //     return {
+      //       contacts: [...withoutDelContactArray]
+      //     }
+      //   })
+      // },
+    }
+
+    componentDidMount(){
+      const localStorageContacts = localStorage.getItem('contacts');
+      const parsedContacts = JSON.parse(localStorageContacts);
+      parsedContacts && this.setState({ contacts: parsedContacts });
+    }
+
+    componentDidUpdate(prevProps, prevState){
+      prevState!==this.state && localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
     }
 
     changeFilter = ({ target: {name, value} }) => {
@@ -50,14 +70,15 @@ class App extends Component {
     render() {
       const { contacts, filter } = this.state;
 
-      return (<>
+      return (
+        <Context.Provider value={{deleteContact: this.deleteContact}}>
         <h1 className="title">Phonebook</h1>
         {/* <ContactForm onSubmit={this.formSubmitHandler} contacts={contacts} /> */}
         <ContactFormik formSubmitHandler={this.formSubmitHandler} contacts={contacts}/>
         <h2 className="title">Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
-        <ContactList contacts={contacts} filter={filter} deleteContact={this.deleteContact} />
-        </>
+        <ContactList contacts={contacts} filter={filter} />
+        </Context.Provider>
         )
     }
 }

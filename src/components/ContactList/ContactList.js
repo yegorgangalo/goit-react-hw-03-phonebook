@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
+import ContactItem from '../ContactItem';
 
 class ContactList extends Component {
     static propTypes = {
-      deleteContact: PropTypes.func.isRequired,
+      // deleteContact: PropTypes.func.isRequired,
       filter: PropTypes.string.isRequired,
-        contacts: PropTypes.arrayOf(
-          PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-            number: PropTypes.string.isRequired,
-            experience: PropTypes.string.isRequired,
-            skills: PropTypes.arrayOf(PropTypes.string.isRequired),
-        })),
+      contacts: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          name: PropTypes.string.isRequired,
+          number: PropTypes.string.isRequired,
+          experience: PropTypes.string.isRequired,
+          skills: PropTypes.arrayOf(PropTypes.string.isRequired),
+      })),
     }
 
     filterContacts = () => {
@@ -27,16 +28,19 @@ class ContactList extends Component {
     render() {
         const filteredContacts = this.filterContacts();
 
-        return <ul className={s.contactList} >
+        return (
+          <ul className={s.contactList} >
           {filteredContacts.map(({ id, name, number, experience, skills }) =>
-            <li key={id} className={s.item} >
-              <span>{name}:</span>
-              <span>{number},</span>
-              <span>{experience},</span>
-              <span>skills: {skills.join(', ')}</span>
-              <button type="button" onClick={()=> this.props.deleteContact(id)} >Delete</button>
-            </li>)}
-        </ul>
+            <ContactItem
+            key={id}
+            id={id}
+            name={name}
+            number={number}
+            experience={experience}
+            skills={skills} />
+            )}
+          </ul>
+        )
     }
 }
 
