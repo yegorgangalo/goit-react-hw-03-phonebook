@@ -15,10 +15,15 @@ class ContactFormik extends Component {
         })),
     }
 
+    state = {
+        expLevel: ['junior', 'middle', 'senior'],
+        skills: ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React']
+    }
+
     render() {
+        const { expLevel, skills } = this.state;
         return <Formik
           initialValues={{
-            id: uuidv4(),
             name: '',
             number:'',
             experience: '',
@@ -30,7 +35,7 @@ class ContactFormik extends Component {
             number: Yup.number().max(1000000000000, 'Too Long!').positive().integer().required('Required'),
           })
           }
-          onSubmit={(values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting, resetForm }) => {
               const { name, number } = values;
               if(this.props.contacts.some(contact => contact.name===name || contact.number===number) ){
                 alert(`Contact with such ${name} or ${number} is already in Phonebook`);
@@ -38,8 +43,15 @@ class ContactFormik extends Component {
                 return;
               }
 
-              this.props.formSubmitHandler(values);
+              this.props.formSubmitHandler({...values, id: uuidv4()});
               setSubmitting(false);
+              resetForm({
+                name: '',
+                number:'',
+                experience: '',
+                licence: false,
+                skills: [],
+              })
           }}
         >
        {({isSubmitting, values}) => (
@@ -52,45 +64,21 @@ class ContactFormik extends Component {
            <ErrorMessage name="number" component="div" />
            <div  role="group" aria-labelledby="radio-group" className={`${s.labelBlock} ${s.groupBlock}`}>
                 <h3 className={s.title}>Your Level</h3>
-                <label>
-                  <Field type="radio"  className={s.inputBox} name="experience" value="junior" />
-                    junior
-                </label>
-                <label>
-                  <Field type="radio"  className={s.inputBox} name="experience" value="middle" />
-                    middle
-                </label>
-                <label>
-                  <Field type="radio"  className={s.inputBox} name="experience" value="senior" />
-                    senior
-                </label>
+                {expLevel.map(exp =>
+                    <label key={exp}>
+                        <Field type="radio"  className={s.inputBox} name="experience" value={exp} />
+                        {exp}
+                    </label>
+                )}
             </div>
             <div role="group" aria-labelledby="checkbox-group" className={`${s.labelBlock} ${s.groupBlock}`}>
               <h3 className={s.title}>Your Skills</h3>
-              <label>
-                <Field type="checkbox"  className={s.inputBox} name="skills" value="HTML" />
-                HTML
-              </label>
-              <label>
-                <Field type="checkbox"  className={s.inputBox} name="skills" value="CSS" />
-                CSS
-              </label>
-              <label>
-                <Field type="checkbox"  className={s.inputBox} name="skills" value="JS" />
-                JS
-              </label>
-              <label>
-                <Field type="checkbox"  className={s.inputBox} name="skills" value="SCSS" />
-                SCSS
-              </label>
-              <label>
-                <Field type="checkbox"  className={s.inputBox} name="skills" value="Git" />
-                Git
-              </label>
-              <label>
-                <Field type="checkbox"  className={s.inputBox} name="skills" value="React" />
-                React
-              </label>
+              {skills.map(skill =>
+                <label key={skill}>
+                    <Field type="checkbox"  className={s.inputBox} name="skills" value={skill} />
+                    {skill}
+                </label>
+              )}
             </div>
             <label className={s.labelBlock}>
                 <Field type="checkbox"  className={s.inputBox} name="licence" id="licence" />

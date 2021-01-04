@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-// import { Formik, Form, Field, ErrorMessage } from 'formik';
-// import * as Yup from 'yup';
-// import { v4 as uuidv4 } from 'uuid';
 import ContactFormik from './components/ContactForm';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList';
@@ -57,84 +54,6 @@ class App extends Component {
         <h1 className="title">Phonebook</h1>
         {/* <ContactForm onSubmit={this.formSubmitHandler} contacts={contacts} /> */}
         <ContactFormik formSubmitHandler={this.formSubmitHandler} contacts={contacts}/>
-        {/* <Formik
-          initialValues={{
-            id: uuidv4(),
-            name: '',
-            number:'',
-            experience: '',
-            licence: false,
-            skills: [],
-          }}
-          validationSchema={Yup.object().shape({
-            name: Yup.string().min(2, 'Too Short!').max(30, 'Too Long!').required('Required'),
-            number: Yup.number().positive().integer().required('Required'),
-          })
-          }
-          onSubmit={(values, { setSubmitting }) => {
-              this.formSubmitHandler(values);
-              setSubmitting(false);
-          }}
-        >
-       {({isSubmitting, values}) => (
-         <Form>
-           <label htmlFor="name">Name</label>
-           <Field type="text" name="name" />
-           <ErrorMessage name="name" component="div" />
-           <label htmlFor="number">Number</label>
-           <Field type="text" name="number" />
-           <ErrorMessage name="number" component="div" />
-           <div  role="group" aria-labelledby="radio-group">
-                <h3>Your Level</h3>
-                <label>
-                  <Field type="radio" name="experience" value="junior" />
-                    junior
-                </label>
-                <label>
-                  <Field type="radio" name="experience" value="middle" />
-                    middle
-                </label>
-                <label>
-                  <Field type="radio" name="experience" value="senior" />
-                    senior
-                </label>
-            </div>
-            <div role="group" aria-labelledby="checkbox-group">
-              <h3>Your Skills</h3>
-              <label>
-                <Field type="checkbox" name="skills" value="HTML" />
-                HTML
-              </label>
-              <label>
-                <Field type="checkbox" name="skills" value="CSS" />
-                CSS
-              </label>
-              <label>
-                <Field type="checkbox" name="skills" value="JS" />
-                JS
-              </label>
-              <label>
-                <Field type="checkbox" name="skills" value="SCSS" />
-                SCSS
-              </label>
-              <label>
-                <Field type="checkbox" name="skills" value="Git" />
-                Git
-              </label>
-              <label>
-                <Field type="checkbox" name="skills" value="React" />
-                React
-              </label>
-            </div>
-            <label>
-                <Field type="checkbox" name="licence" id="licence" />
-                Agree with Licence
-            </label>
-
-           <button type="submit" disabled={isSubmitting || values.experience==='' || !values.licence || values.name==='' || values.number==='' || values.skills.length===0}>Add Contact</button>
-         </Form>
-       )}
-     </Formik> */}
         <h2 className="title">Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
         <ContactList contacts={contacts} filter={filter} deleteContact={this.deleteContact} />
