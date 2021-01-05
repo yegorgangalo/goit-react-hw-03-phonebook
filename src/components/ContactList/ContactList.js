@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
 import ContactItem from '../ContactItem';
 
-class ContactList extends Component {
+class ContactList extends PureComponent {
     static propTypes = {
       // deleteContact: PropTypes.func.isRequired,
       filter: PropTypes.string.isRequired,
@@ -29,7 +29,7 @@ class ContactList extends Component {
         const filteredContacts = this.filterContacts();
 
         return (
-          <ul className={s.contactList} >
+          <ul>
           {filteredContacts.map(({ id, name, number, experience, skills }) =>
             <li className={s.item} key={id}>
               <ContactItem

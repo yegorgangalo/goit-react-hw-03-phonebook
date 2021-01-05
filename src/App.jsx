@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import Context from './components/Context';
 import ContactFormik from './components/ContactForm';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList';
-import Context from './components/Context';
+import Modal from './components/Modal';
+import IconButton from './components/IconButton';
+import { ReactComponent as CloseIcon } from './icon/close.svg';
+import s from './App.module.css';
 
-class App extends Component {
+class App extends PureComponent {
     static defaultProps = {
       contacts: [
         {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56', experience: 'junior', skills: ['HTML', 'CSS']},
@@ -21,17 +25,9 @@ class App extends Component {
     }
 
     state = {
-      // contacts: this.props.contacts,
       contacts: [],
       filter: '',
-      // deleteContact: (id) => {
-      //   this.setState((prevState) => {
-      //     const withoutDelContactArray = prevState.contacts.filter(contact => contact.id !==id)
-      //     return {
-      //       contacts: [...withoutDelContactArray]
-      //     }
-      //   })
-      // },
+      showModal: false,
     }
 
     componentDidMount(){
@@ -41,7 +37,8 @@ class App extends Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-      prevState!==this.state && localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+      prevState !== this.state && localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+      prevState.contacts.length !== 0 && this.state.contacts.length > prevState.contacts.length && this.toggleModal();
     }
 
     changeFilter = ({ target: {name, value} }) => {
@@ -56,6 +53,7 @@ class App extends Component {
           contacts: [...prevState.contacts, newContact]
         }
       })
+      // this.toggleModal();
     }
 
     deleteContact = (id) => {
@@ -67,15 +65,27 @@ class App extends Component {
       })
     }
 
+    toggleModal = () => {
+      this.setState(({ showModal }) => ({
+        showModal: !showModal,
+      }))
+    }
+
     render() {
-      const { contacts, filter } = this.state;
+      const { contacts, filter, showModal } = this.state;
 
       return (
         <Context.Provider value={{deleteContact: this.deleteContact}}>
-        <h1 className="title">Phonebook</h1>
-        {/* <ContactForm onSubmit={this.formSubmitHandler} contacts={contacts} /> */}
-        <ContactFormik formSubmitHandler={this.formSubmitHandler} contacts={contacts}/>
-        <h2 className="title">Contacts</h2>
+        <h1 className={s.title}>Phonebook</h1>
+        <IconButton onClick={this.toggleModal} aria-label="Open Modal" classNames={s.iconButtonOpenModal}> Add Contact </IconButton>
+        {showModal && (
+        <Modal onClose={this.toggleModal}>
+          <ContactFormik formSubmitHandler={this.formSubmitHandler} contacts={contacts}/>
+          <IconButton onClick={this.toggleModal} aria-label="Close Modal" classNames={s.iconButtonCloseModal}>
+              <CloseIcon width="20" height="20" />
+          </IconButton>
+        </Modal>)}
+        <h2 className={s.title}>Contacts</h2>
         <Filter value={filter} onChange={this.changeFilter} />
         <ContactList contacts={contacts} filter={filter} />
         </Context.Provider>

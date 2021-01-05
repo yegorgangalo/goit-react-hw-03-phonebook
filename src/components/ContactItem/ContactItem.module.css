@@ -2,9 +2,16 @@
   margin-right: 7px;
 }
 
-.button {
+/* .button {
   position: absolute;
   right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+} */
+
+.positionButton {
+  position: absolute;
+  right: 4px;
   top: 50%;
   transform: translateY(-50%);
 }

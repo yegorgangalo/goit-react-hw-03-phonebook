@@ -5,7 +5,7 @@ import s from './Filter.module.css';
 function Filter ({value, onChange}) {
         return <div className={s.labelBlock} >
             <h4  className={s.title}>Find contacts by name, number or level</h4>
-            <input type="text" name="filter" value={value} onChange={onChange} />
+            <input className={s.input} type="text" name="filter" value={value} onChange={onChange} />
             </div>
 }
 

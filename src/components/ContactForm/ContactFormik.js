@@ -1,11 +1,20 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
+import IconButton from '../IconButton';
 import s from './ContactForm.module.css';
 
-class ContactFormik extends Component {
+const defaultFormikStateValues = {
+  name: '',
+  number: '',
+  experience: '',
+  licence: false,
+  skills: [],
+};
+
+class ContactFormik extends PureComponent {
     static propTypes = {
         formSubmitHandler: PropTypes.func.isRequired,
         contacts: PropTypes.arrayOf(
@@ -20,23 +29,11 @@ class ContactFormik extends Component {
         skills: ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React']
     }
 
-    // componentDidMount(){
-    //   window.addEventListener('keydown', e => {
-    //     e.code==='Enter' && e.target.name==='expirience' && ;
-    //   })
-    // }
-
     render() {
         const { expLevel, skills } = this.state;
 
         return <Formik
-          initialValues={{
-            name: '',
-            number:'',
-            experience: '',
-            licence: false,
-            skills: [],
-          }}
+          initialValues={defaultFormikStateValues}
           validationSchema={Yup.object().shape({
             name: Yup.string().min(2, 'Too Short!').max(30, 'Too Long!').required('Required'),
             number: Yup.number().max(1000000000000, 'Too Long!').positive().integer().required('Required'),
@@ -44,29 +41,24 @@ class ContactFormik extends Component {
           }
           onSubmit={(values, { setSubmitting, resetForm }) => {
               const { name, number } = values;
-              if(this.props.contacts.some(contact => contact.name===name || contact.number===number) ){
+              const { contacts, formSubmitHandler } = this.props;
+              if(contacts.some(contact => contact.name===name || contact.number===number) ){
                 alert(`Contact with such ${name} or ${number} is already in Phonebook`);
                 setSubmitting(false);
                 return;
               }
 
-              this.props.formSubmitHandler({...values, id: uuidv4()});
+              formSubmitHandler({...values, id: uuidv4()});
               setSubmitting(false);
-              resetForm({
-                name: '',
-                number:'',
-                experience: '',
-                licence: false,
-                skills: [],
-              })
+              resetForm(defaultFormikStateValues);
           }}
         >
        {({isSubmitting, values}) => (
          <Form className={s.contactForm}>
-           <label htmlFor="name">Name </label>
+           <label  className={s.title} htmlFor="name">Name </label>
            <Field className={s.labelBlock} type="text" name="name" />
            <ErrorMessage name="name" component="div" />
-           <label htmlFor="number">Number </label>
+           <label  className={s.title} htmlFor="number">Number </label>
            <Field className={s.labelBlock} type="text" name="number" />
            <ErrorMessage name="number" component="div" />
            <div  role="group" aria-labelledby="radio-group" className={`${s.labelBlock} ${s.groupBlock}`}>
@@ -92,7 +84,14 @@ class ContactFormik extends Component {
                 All data is right
             </label>
 
-           <button type="submit" className={s.button} disabled={isSubmitting || values.experience==='' || !values.licence || values.name==='' || values.number==='' || values.skills.length===0}>Add Contact</button>
+            <IconButton
+                type="submit"
+                classNames={s.iconButtonAddContact}
+                aria-label="submit button"
+                disabled={isSubmitting || values.experience === '' || !values.licence || values.name === '' || values.number === '' || values.skills.length === 0}
+            >
+                Add Contact
+            </IconButton>
          </Form>
        )}
      </Formik>
