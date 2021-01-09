@@ -20,10 +20,6 @@ class App extends PureComponent {
       ],
     }
 
-    static propTypes = {
-        //
-    }
-
     state = {
       contacts: [],
       filter: '',

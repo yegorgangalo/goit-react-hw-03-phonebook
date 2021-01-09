@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 import s from './Modal.module.css';
 
@@ -30,5 +31,10 @@ class Modal extends PureComponent {
         , modalRoot)
     }
 }
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
 
 export default Modal;

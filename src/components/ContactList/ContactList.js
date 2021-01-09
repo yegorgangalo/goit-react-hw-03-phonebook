@@ -5,7 +5,6 @@ import ContactItem from '../ContactItem';
 
 class ContactList extends PureComponent {
     static propTypes = {
-      // deleteContact: PropTypes.func.isRequired,
       filter: PropTypes.string.isRequired,
       contacts: PropTypes.arrayOf(
         PropTypes.shape({
