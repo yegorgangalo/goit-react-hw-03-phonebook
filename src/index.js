@@ -11,7 +11,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
-    </Provider>;
+    </Provider>
   </React.StrictMode>,
   root,
 );
+
+// "homepage": "https://yegorgangalo.github.io/goit-react-hw-03-phonebook",
