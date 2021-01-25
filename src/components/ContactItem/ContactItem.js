@@ -12,7 +12,7 @@ function ContactItem ({ id, name, number, experience, skills }) {
                       <span className={s.point}>{name}:</span>
                       <span className={s.point}>{number},</span>
                       <span className={s.point}>{experience},</span>
-                      <span className={s.point}>skills: {skills.join(', ')}</span>
+                      <span className={s.point}>skills: {skills && skills.join(', ')}</span>
                       <IconButton onClick={()=> deleteContact(id)} aria-label="Delete Contact" classNames={s.positionButton}>
                           <DeleteIcon width="20" height="20" />
                       </IconButton>
