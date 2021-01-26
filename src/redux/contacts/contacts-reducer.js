@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
-import actionTypes from './contacts-types';
+import { createReducer } from '@reduxjs/toolkit';
+import * as actions from './contacts-actions';
 
-const { ADD, DELETE, GET, FILTER_CHANGE } = actionTypes;
+// const { addContact: ADD, deleteContact: DELETE, changeFilter: FILTER_CHANGE, getFromLocalStorage: GET} = actions;
+const { addContact: ADD, deleteContact: DELETE, changeFilter: FILTER_CHANGE } = actions;
 
 const initialState = [
     {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56', experience: 'junior', skills: ['HTML', 'CSS']},
@@ -12,32 +14,15 @@ const initialState = [
     {id: 'id-6', name: 'Ed Clirence', number: '217-01-46', experience: 'middle', skills: ['HTML', 'CSS', 'JS']},
 ];
 
-const items = (state = initialState, { type, payload }) => {
-    switch (type) {
+const items = createReducer(initialState, {
+    [ADD]: (state, { payload }) => [...state, payload],
+    [DELETE]: (state, { payload }) => state.filter(({ id }) => id !== payload),
+    // [GET]: (state, { payload }) => payload,
+});
 
-        case ADD:
-            return [...state, payload];
-
-        case DELETE:
-            return state.filter(({id}) => id !== payload);
-
-        case GET:
-            return payload;
-
-        default:
-            return state;
-    }
-}
-
-const filter = (state = '', { type, payload }) => {
-    switch (type) {
-        case FILTER_CHANGE:
-            return payload.toLowerCase();
-
-        default:
-            return state;
-    }
-}
+const filter = createReducer('', {
+    [FILTER_CHANGE]: (state, { payload }) => payload.toLowerCase(),
+})
 
 export default combineReducers({
   items,

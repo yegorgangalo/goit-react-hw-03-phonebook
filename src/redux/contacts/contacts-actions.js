@@ -1,24 +1,6 @@
-import actionTypes from './contacts-types';
+import { createAction } from '@reduxjs/toolkit';
 
-const { ADD, DELETE, GET, FILTER_CHANGE } = actionTypes;
-
-export const addContact = (newContact) => ({
-    type: ADD,
-    payload: newContact,
-});
-
-export const deleteContact = (id) => ({
-    type: DELETE,
-    payload: id,
-});
-
-// export const changeFilter = ({ target: { value } }) => ({
-export const changeFilter = (value) => ({
-    type: FILTER_CHANGE,
-    payload: value,
-});
-
-export const getFromLocalStorage = (contactsArray) => ({
-    type: GET,
-    payload: contactsArray,
-});
+export const addContact = createAction('contacts/add');
+export const deleteContact = createAction('contacts/delete');
+export const changeFilter = createAction('filter/change');
+// export const getFromLocalStorage = createAction('contacts/get');

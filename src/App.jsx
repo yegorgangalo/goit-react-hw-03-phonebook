@@ -15,16 +15,16 @@ class App extends PureComponent {
       showModal: false,
     }
 
-    componentDidMount(){
-      const localStorageContacts = localStorage.getItem('contacts');
-      const parsedContacts = JSON.parse(localStorageContacts);
-      parsedContacts.length!==0 && this.props.getFromLocalStorage(parsedContacts);
-    }
+    // componentDidMount(){
+    //   const localStorageContacts = localStorage.getItem('contacts');
+    //   const parsedContacts = JSON.parse(localStorageContacts);
+    //   parsedContacts.length!==0 && this.props.getFromLocalStorage(parsedContacts);
+    // }
 
-    componentDidUpdate(prevProps, prevState){
-      prevProps !== this.props && localStorage.setItem('contacts', JSON.stringify(this.props.contacts));
-      prevProps.contacts.length !== 0 && this.props.contacts.length > prevProps.contacts.length && this.toggleModal();
-    }
+    // componentDidUpdate(prevProps, prevState){
+    //   // prevProps !== this.props && localStorage.setItem('contacts', JSON.stringify(this.props.contacts));
+    //   prevProps.contacts.length !== 0 && this.props.contacts.length > prevProps.contacts.length && this.toggleModal();
+    // }
 
     toggleModal = () => {
       this.setState(({ showModal }) => ({
@@ -43,7 +43,7 @@ class App extends PureComponent {
           <IconButton onClick={this.toggleModal} aria-label="Open Modal" classNames={s.iconButtonOpenModal}> Add Contact </IconButton>
           {showModal && (
           <Modal onClose={this.toggleModal}>
-            <ContactFormik formSubmitHandler={addContact} contacts={contacts}/>
+            <ContactFormik onClose={this.toggleModal} formSubmitHandler={addContact} contacts={contacts}/>
             <IconButton onClick={this.toggleModal} aria-label="Close Modal" classNames={s.iconButtonCloseModal}>
                 <CloseIcon width="20" height="20" />
             </IconButton>
@@ -64,7 +64,7 @@ const mapStateToProps = ({contacts:{items, filter}}) => ({
 const mapDispatchToProps = (dispatch) => ({
   changeFilter: ({target:{value}}) => dispatch(contactsActions.changeFilter(value)),
   addContact: value => dispatch(contactsActions.addContact(value)),
-  getFromLocalStorage: value => dispatch(contactsActions.getFromLocalStorage(value)),
+  // getFromLocalStorage: value => dispatch(contactsActions.getFromLocalStorage(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
