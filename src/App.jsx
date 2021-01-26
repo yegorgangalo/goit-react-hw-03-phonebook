@@ -43,7 +43,7 @@ class App extends PureComponent {
           <IconButton onClick={this.toggleModal} aria-label="Open Modal" classNames={s.iconButtonOpenModal}> Add Contact </IconButton>
           {showModal && (
           <Modal onClose={this.toggleModal}>
-            <ContactFormik onClose={this.toggleModal} formSubmitHandler={addContact} contacts={contacts}/>
+            <ContactFormik toggleModal={this.toggleModal} formSubmitHandler={addContact} contacts={contacts}/>
             <IconButton onClick={this.toggleModal} aria-label="Close Modal" classNames={s.iconButtonCloseModal}>
                 <CloseIcon width="20" height="20" />
             </IconButton>

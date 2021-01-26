@@ -41,7 +41,7 @@ class ContactFormik extends PureComponent {
           }
           onSubmit={(values, { setSubmitting, resetForm }) => {
               const { name, number } = values;
-              const { contacts, formSubmitHandler, onClose } = this.props;
+              const { contacts, formSubmitHandler, toggleModal } = this.props;
               if(contacts.some(contact => contact.name===name || contact.number===number) ){
                 alert(`Contact with such ${name} or ${number} is already in Phonebook`);
                 setSubmitting(false);
@@ -50,7 +50,7 @@ class ContactFormik extends PureComponent {
 
               formSubmitHandler({...values, id: uuidv4()});
               setSubmitting(false);
-              onClose();
+              toggleModal();
               resetForm(defaultFormikStateValues);
           }}
         >
