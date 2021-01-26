@@ -38,6 +38,13 @@ ContactList.propTypes = {
 
 export default ContactList;
 
+
+
+
+
+
+
+
 // const toFilterContacts = (contactsArray, filter) =>
 //      contactsArray.filter(contact =>
 //            Object.values(contact)

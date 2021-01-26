@@ -7,7 +7,7 @@ import s from './ContactItem.module.css';
 
 function ContactItem({ id, name, number, experience, skills }) {
     const dispatch = useDispatch();
-    const deleteContact = value => dispatch(contactsActions.deleteContact(value));
+    const deleteContact = (contactId) => dispatch(contactsActions.deleteContact(contactId));
     return (
         <>
             <span className={s.point}>{name}:</span>

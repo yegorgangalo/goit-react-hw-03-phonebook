@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,23 +14,14 @@ const defaultFormikStateValues = {
   skills: [],
 };
 
-class ContactFormik extends PureComponent {
-    static propTypes = {
-        formSubmitHandler: PropTypes.func.isRequired,
-        contacts: PropTypes.arrayOf(
-        PropTypes.shape({
-          name: PropTypes.string.isRequired,
-          number: PropTypes.string.isRequired,
-        })),
-    }
+function ContactFormik ({ contacts, formSubmitHandler, toggleModal }) {
+  const expLevel = ['junior', 'middle', 'senior'];
+  const skills = ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React'];
 
-    state = {
-        expLevel: ['junior', 'middle', 'senior'],
-        skills: ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React']
-    }
-
-    render() {
-        const { expLevel, skills } = this.state;
+  const isDisabled = (isSubmitting, values) => {
+    const { experience, licence, name, number, skills } = values;
+    return isSubmitting || experience === '' || !licence || name === '' || number === '' || skills.length === 0;
+  }
 
         return <Formik
           initialValues={defaultFormikStateValues}
@@ -41,7 +32,6 @@ class ContactFormik extends PureComponent {
           }
           onSubmit={(values, { setSubmitting, resetForm }) => {
               const { name, number } = values;
-              const { contacts, formSubmitHandler, toggleModal } = this.props;
               if(contacts.some(contact => contact.name===name || contact.number===number) ){
                 alert(`Contact with such ${name} or ${number} is already in Phonebook`);
                 setSubmitting(false);
@@ -89,14 +79,20 @@ class ContactFormik extends PureComponent {
                 type="submit"
                 classNames={s.iconButtonAddContact}
                 aria-label="submit button"
-                disabled={isSubmitting || values.experience === '' || !values.licence || values.name === '' || values.number === '' || values.skills.length === 0}
-            >
-                Add Contact
-            </IconButton>
+                disabled={isDisabled(isSubmitting, values)}
+            > Add Contact </IconButton>
          </Form>
        )}
      </Formik>
-    }
 }
+
+ContactFormik.propTypes = {
+        formSubmitHandler: PropTypes.func.isRequired,
+        contacts: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string.isRequired,
+          number: PropTypes.string.isRequired,
+        })),
+    }
 
 export default ContactFormik;

@@ -1,4 +1,3 @@
-// import React, { PureComponent } from 'react';
 import React, { useState } from 'react';
 import ContactFormik from './components/ContactForm';
 import Filter from './components/Filter';
@@ -7,7 +6,6 @@ import Modal from './components/Modal';
 import IconButton from './components/IconButton';
 import { ReactComponent as CloseIcon } from './icon/close.svg';
 import s from './App.module.css';
-// import { connect } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
 import { getItems, getFilter } from './redux/contacts/contacts-selectors';
 import * as contactsActions from './redux/contacts/contacts-actions';
@@ -18,38 +16,12 @@ function App () {
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
-    // state={
-    //   showModal: false,
-    // }
-
-    // componentDidMount(){
-    //   const localStorageContacts = localStorage.getItem('contacts');
-    //   const parsedContacts = JSON.parse(localStorageContacts);
-    //   parsedContacts.length!==0 && this.props.getFromLocalStorage(parsedContacts);
-    // }
-
-    // componentDidUpdate(prevProps, prevState){
-    //   // prevProps !== this.props && localStorage.setItem('contacts', JSON.stringify(this.props.contacts));
-    //   prevProps.contacts.length !== 0 && this.props.contacts.length > prevProps.contacts.length && this.toggleModal();
-    // }
-
-    // toggleModal = () => {
-    //   this.setState(({ showModal }) => ({
-    //     showModal: !showModal,
-    //   }))
-    // }
-
     const toggleModal = () => {
-      setShowModal(val => !val);
+      setShowModal(value => !value);
     }
 
-    const changeFilter = ({ target: { value } }) => dispatch(contactsActions.changeFilter(value));
+    const changeFilter = ({ target }) => dispatch(contactsActions.changeFilter(target.value));
     const addContact = value => dispatch(contactsActions.addContact(value));
-
-    // render() {
-      // const { showModal } = this.state;
-      // const { contacts, filter } = this.props;
-      // const { changeFilter, addContact } = this.props;
 
       return (
         <>
@@ -67,8 +39,18 @@ function App () {
           <ContactList/>
         </>
       )
-    // }
 }
+
+export default App;
+
+
+
+
+
+
+
+
+
 
 // const mapStateToProps = ({contacts:{items, filter}}) => ({
 //   contacts: items ,
@@ -82,4 +64,3 @@ function App () {
 
 // export default connect(mapStateToProps, mapDispatchToProps)(App);
 
-export default App;
