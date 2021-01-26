@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import s from './ContactList.module.css';
 import ContactItem from '../ContactItem';
-import { connect } from 'react-redux';
-import * as contactsActions from '../../redux/contacts/contacts-actions';
+import { useSelector } from 'react-redux';
+import { getFilteredContacts} from '../../redux/contacts/contacts-selectors';
 
-const ContactList = ({contacts}) => (
+function ContactList() {
+  const contacts = useSelector(getFilteredContacts);
+
+  return (
     <ul>
       {contacts.map(({ id, name, number, experience, skills }) =>
         <li className={s.item} key={id}>
@@ -17,9 +20,10 @@ const ContactList = ({contacts}) => (
             skills={skills}
           />
         </li>
-        )}
+      )}
     </ul>
-)
+  )
+}
 
 ContactList.propTypes = {
       contacts: PropTypes.arrayOf(
@@ -32,17 +36,15 @@ ContactList.propTypes = {
       })),
 }
 
-const toFilterContacts = (contactsArray, filter) =>
-     contactsArray.filter(contact =>
-           Object.values(contact)
-            .some(val => val.toString().toLowerCase().includes(filter)))
+export default ContactList;
 
-const mapStateToProps = ({contacts:{items, filter}}) => ({
-  contacts: toFilterContacts(items, filter) ,
-})
+// const toFilterContacts = (contactsArray, filter) =>
+//      contactsArray.filter(contact =>
+//            Object.values(contact)
+//             .some(val => val.toString().toLowerCase().includes(filter)))
 
-const mapDispatchToProps = (dispatch) => ({
-  changeFilter: ({target:{value}}) => dispatch(contactsActions.changeFilter(value)),
-});
+// const mapStateToProps = ({contacts:{items, filter}}) => ({
+//   contacts: toFilterContacts(items, filter) ,
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactList);
+// export default connect(mapStateToProps)(ContactList);

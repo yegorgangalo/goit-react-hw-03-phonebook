@@ -1,11 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as contactsActions from '../../redux/contacts/contacts-actions';
 import IconButton from '../IconButton';
 import { ReactComponent as DeleteIcon } from '../../icon/delete.svg';
 import s from './ContactItem.module.css';
 
-function ContactItem ({ id, name, number, experience, skills, deleteContact }) {
+function ContactItem({ id, name, number, experience, skills }) {
+    const dispatch = useDispatch();
+    const deleteContact = value => dispatch(contactsActions.deleteContact(value));
     return (
         <>
             <span className={s.point}>{name}:</span>
@@ -19,8 +21,10 @@ function ContactItem ({ id, name, number, experience, skills, deleteContact }) {
     )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  deleteContact: value => dispatch(contactsActions.deleteContact(value)),
-});
+export default ContactItem;
 
-export default connect(null, mapDispatchToProps)(ContactItem);
+// const mapDispatchToProps = (dispatch) => ({
+//   deleteContact: value => dispatch(contactsActions.deleteContact(value)),
+// });
+
+// export default connect(null, mapDispatchToProps)(ContactItem);
