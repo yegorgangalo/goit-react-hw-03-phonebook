@@ -12,7 +12,7 @@ export const getContacts = () => (dispatch) => {
 
     dispatch(getContactRequest());
 
-    fetch(`${BASE_URL}/contacts`)
+    fetch(`${BASE_URL}/contact`)
         .then(response => response.json())
         .then(data => dispatch(getContactSuccess(data)))
         .catch(error => dispatch(getContactError(error)));

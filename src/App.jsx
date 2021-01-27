@@ -7,7 +7,7 @@ import IconButton from './components/IconButton';
 import { ReactComponent as CloseIcon } from './icon/close.svg';
 import s from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, getFilter, getLoading } from './redux/contacts/contacts-selectors';
+import { getItems, getFilter, getLoading, getError } from './redux/contacts/contacts-selectors';
 import * as contactsOperations from './redux/contacts/contacts-operations';
 import * as contactsActions from './redux/contacts/contacts-actions';
 
@@ -16,6 +16,7 @@ function App () {
   const contacts = useSelector(getItems);
   const filter = useSelector(getFilter);
   const loading = useSelector(getLoading);
+  const error = useSelector(getError);
   const dispatch = useDispatch();
 
   const changeFilter = ({ target }) => dispatch(contactsActions.changeFilter(target.value));
@@ -44,6 +45,7 @@ function App () {
           <Filter value={filter} onChange={changeFilter} />
           <ContactList />
           {loading && <h1>is loading...</h1>}
+          {error && <h1>{error.message}</h1>}
         </>
       )
 }
