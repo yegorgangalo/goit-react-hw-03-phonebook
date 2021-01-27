@@ -1,12 +1,9 @@
 .contactForm {
   box-sizing: border-box;
-  /* width: 50%; */
   width: 100%;
   padding: 20px;
-  /* margin-bottom: 20px; */
   display: flex;
   flex-direction: column;
-  /* border: 1px solid rgb(68, 68, 68); */
 }
 
 .labelBlock {
@@ -28,17 +25,6 @@
   margin-right: 5px;
 }
 
-/* .button {
-  margin: auto;
-  max-width: 120px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border: 1px solid rgb(187, 187, 187);
-  border-radius: 5px;
-} */
-
 .iconButtonAddContact {
   border-radius: 4px;
   padding-left: 20px;
@@ -46,14 +32,20 @@
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 10px;
-  background-color: rgb(230, 230, 230);
-  border: 2px solid rgb(182, 182, 182);
+  color: rgb(53, 53, 53);
+  background-color: rgb(47, 209, 82);
+  border: 2px solid rgb(35, 172, 65);
   font-weight: 700;
-  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
 }
 
 .iconButtonAddContact:hover,
 .iconButtonAddContact:focus {
   background-color: #fff;
+  border: 2px solid rgb(182, 182, 182);
+}
+
+.iconButtonAddContact:disabled {
+  background-color: rgb(227, 255, 227);
   border: 2px solid rgb(182, 182, 182);
 }

@@ -5,7 +5,7 @@ import ContactItem from '../ContactItem';
 import { useSelector } from 'react-redux';
 import { getFilteredContacts} from '../../redux/contacts/contacts-selectors';
 
-function ContactList() {
+function ContactList({toggleModal}) {
   const contacts = useSelector(getFilteredContacts);
 
   return (
@@ -18,6 +18,7 @@ function ContactList() {
             number={number}
             experience={experience}
             skills={skills}
+            toggleModal={toggleModal}
           />
         </li>
       )}

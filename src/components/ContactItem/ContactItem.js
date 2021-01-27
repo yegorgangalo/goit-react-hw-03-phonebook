@@ -1,22 +1,29 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import * as operations from '../../redux/contacts/contacts-operations';
+import {deleteContact} from '../../redux/contacts/contacts-operations';
 import IconButton from '../IconButton';
-import { ReactComponent as DeleteIcon } from '../../icon/delete.svg';
+import { FaRegEdit } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
 import s from './ContactItem.module.css';
 
-function ContactItem({ id, name, number, experience, skills }) {
+function ContactItem({ id, name, number, experience, skills, toggleModal }) {
     const dispatch = useDispatch();
-    const deleteContact = (contactId) => dispatch(operations.deleteContact(contactId));
+    const deleteContactById = () => dispatch(deleteContact(id));
+    const contactInfo = { id, name, number, experience, skills };
     return (
         <>
             <span className={s.point}>{name}:</span>
             <span className={s.point}>{number},</span>
             <span className={s.point}>{experience},</span>
             <span className={s.point}>skills: {skills && skills.join(', ')}</span>
-            <IconButton onClick={()=> deleteContact(id)} aria-label="Delete Contact" classNames={s.positionButton}>
-                <DeleteIcon width="20" height="20" />
-            </IconButton>
+            <span className={s.positionBtn}>
+                <IconButton onClick={()=>toggleModal(contactInfo)} aria-label="Edit Contact" classNames={s.colorBtn}>
+                    <FaRegEdit />
+                </IconButton>
+                <IconButton onClick={deleteContactById} aria-label="Delete Contact" classNames={s.colorBtn}>
+                    <MdDelete />
+                </IconButton>
+            </span>
         </>
     )
 }

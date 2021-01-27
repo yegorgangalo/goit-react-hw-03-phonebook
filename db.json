@@ -1,3 +1,101 @@
 {
-  "contacts": []
+  "contacts": [
+    {
+      "name": "dfgdg",
+      "number": "345345",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "JS"
+      ],
+      "id": 1
+    },
+    {
+      "name": "asd",
+      "number": "345",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "SCSS"
+      ],
+      "id": 2
+    },
+    {
+      "name": "dfg",
+      "number": "5765",
+      "experience": "senior",
+      "licence": true,
+      "skills": [
+        "CSS"
+      ],
+      "id": 3
+    },
+    {
+      "name": "hhjk",
+      "number": "456",
+      "experience": "junior",
+      "licence": true,
+      "skills": [
+        "CSS"
+      ],
+      "id": 4
+    },
+    {
+      "name": "anton",
+      "number": "0674545453",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "HTML",
+        "SCSS",
+        "Git"
+      ],
+      "id": 5
+    },
+    {
+      "name": "margo",
+      "number": "564",
+      "experience": "senior",
+      "licence": true,
+      "skills": [
+        "SCSS",
+        "CSS"
+      ],
+      "id": 6
+    },
+    {
+      "name": "yegor",
+      "number": "0932323231",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "Git"
+      ],
+      "id": 7
+    },
+    {
+      "name": "anna",
+      "number": "12125656",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "Git",
+        "HTML",
+        "CSS",
+        "SCSS",
+        "React"
+      ],
+      "id": 8
+    },
+    {
+      "name": "dans",
+      "number": "454657",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "JS"
+      ],
+      "id": 9
+    }
+  ]
 }

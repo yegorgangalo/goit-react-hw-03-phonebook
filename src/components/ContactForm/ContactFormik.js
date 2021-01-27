@@ -1,12 +1,14 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-// import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import IconButton from '../IconButton';
 import s from './ContactForm.module.css';
 
-const defaultFormikStateValues = {
+/* ------------------------------------------------------------------------------------------------------------ */
+const expLevel = ['junior', 'middle', 'senior'];
+const skills = ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React'];
+const defaultStateValues = {
   name: '',
   number: '',
   experience: '',
@@ -14,41 +16,44 @@ const defaultFormikStateValues = {
   skills: [],
 };
 
-function ContactFormik ({ contacts, formSubmitHandler, toggleModal }) {
-  const expLevel = ['junior', 'middle', 'senior'];
-  const skills = ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React'];
-
-  const isDisabled = (isSubmitting, formValues) => {
-    const { experience, licence, name, number, skills } = formValues;
-    return isSubmitting || experience === '' || !licence || name === '' || number === '' || skills.length === 0;
+/* ------------------------------------------------------------------------------------------------------------ */
+const noDublicateValidation = (values, contactInfo, contacts, setSubmitting) => {
+  const { name, number } = values;
+  if(!contactInfo.id && contacts.some(contact => contact.name===name || contact.number===number) ){
+    alert(`Contact with such ${name} or ${number} is already in Phonebook`);
+    setSubmitting(false);
+    return;
   }
+}
 
-        return <Formik
+const isDisabledBtn = (isSubmitting, formValues) => {
+  const { experience, licence, name, number, skills } = formValues;
+  return isSubmitting || experience === '' || !licence || name === '' || number === '' || skills.length === 0;
+}
+
+/* ------------------------------------------------------------------------------------------------------------ */
+function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactInfo }) {
+  const defaultFormikStateValues = contactInfo.id ? {...contactInfo, licence: true} : defaultStateValues;
+
+  return <Formik
           initialValues={defaultFormikStateValues}
           validationSchema={Yup.object().shape({
             name: Yup.string().min(2, 'Too Short!').max(30, 'Too Long!').required('Required'),
             number: Yup.number().max(1000000000000, 'Too Long!').positive().integer().required('Required'),
-          })
-          }
+          })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-              const { name, number } = values;
-              if(contacts.some(contact => contact.name===name || contact.number===number) ){
-                alert(`Contact with such ${name} or ${number} is already in Phonebook`);
-                setSubmitting(false);
-                return;
-              }
-
-              // formSubmitHandler({...values, id: uuidv4()});
-              formSubmitHandler(values);
-              setSubmitting(false);
-              toggleModal();
-              resetForm(defaultFormikStateValues);
+            noDublicateValidation(values, contactInfo, contacts, setSubmitting);
+            const {addContact, editContact}=formSubmitHandler;
+            contactInfo.id ? editContact({ ...values, id: contactInfo.id }) : addContact(values);
+            setSubmitting(false);
+            resetForm(defaultStateValues);
+            toggleModal();
           }}
         >
-       {({isSubmitting, values}) => (
+        {({isSubmitting, values}) => (
          <Form className={s.contactForm}>
            <label  className={s.title} htmlFor="name">Name </label>
-           <Field className={s.labelBlock} type="text" name="name" />
+           <Field className={s.labelBlock} type="text" name="name" autoFocus/>
            <ErrorMessage name="name" component="div" />
            <label  className={s.title} htmlFor="number">Number </label>
            <Field className={s.labelBlock} type="text" name="number" />
@@ -80,15 +85,18 @@ function ContactFormik ({ contacts, formSubmitHandler, toggleModal }) {
                 type="submit"
                 classNames={s.iconButtonAddContact}
                 aria-label="submit button"
-                disabled={isDisabled(isSubmitting, values)}
+                disabled={isDisabledBtn(isSubmitting, values)}
             > Add Contact </IconButton>
          </Form>
        )}
-     </Formik>
+  </Formik>
 }
 
 ContactFormik.propTypes = {
-        formSubmitHandler: PropTypes.func.isRequired,
+        formSubmitHandler: PropTypes.shape({
+          addContact: PropTypes.func.isRequired,
+          editContact: PropTypes.func.isRequired,
+        }),
         contacts: PropTypes.arrayOf(
         PropTypes.shape({
           name: PropTypes.string.isRequired,

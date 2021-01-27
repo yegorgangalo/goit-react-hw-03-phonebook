@@ -2,16 +2,23 @@
   margin-right: 7px;
 }
 
-/* .button {
+.positionBtn {
+  /* color: rgb(88, 88, 88); */
   position: absolute;
-  right: 0;
+  right: 6px;
   top: 50%;
   transform: translateY(-50%);
-} */
+}
 
-.positionButton {
-  position: absolute;
-  right: 4px;
-  top: 50%;
-  transform: translateY(-50%);
+.colorBtn {
+  color: rgb(88, 88, 88);
+}
+
+.colorBtn:not(:last-child) {
+  margin-right: 4px;
+}
+
+.colorBtn:hover,
+.colorBtn:focus {
+  color: rgb(160, 36, 36);
 }

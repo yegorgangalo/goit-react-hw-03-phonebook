@@ -10,9 +10,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getItems, getFilter, getLoading, getError } from './redux/contacts/contacts-selectors';
 import * as contactsOperations from './redux/contacts/contacts-operations';
 import * as contactsActions from './redux/contacts/contacts-actions';
+/* ----------------------------------------------------------------------- */
 
 function App () {
   const [showModal, setShowModal] = useState(false);
+  const [contactInfo, setContactInfo] = useState(null);
   const contacts = useSelector(getItems);
   const filter = useSelector(getFilter);
   const loading = useSelector(getLoading);
@@ -21,13 +23,15 @@ function App () {
 
   const changeFilter = ({ target }) => dispatch(contactsActions.changeFilter(target.value));
   const addContact = (value) => dispatch(contactsOperations.addContact(value));
+  const editContact = (value) => dispatch(contactsOperations.editContact(value));
 
   useEffect(() => {
     dispatch(contactsOperations.getContacts());
   }, [dispatch])
 
-    const toggleModal = () => {
+    const toggleModal = (contactInfo=null) => {
       setShowModal(value => !value);
+      setContactInfo(contactInfo);
     }
 
       return (
@@ -36,14 +40,14 @@ function App () {
           <IconButton onClick={toggleModal} aria-label="Open Modal" classNames={s.iconButtonOpenModal}> Add Contact </IconButton>
           {showModal && (
           <Modal onClose={toggleModal}>
-            <ContactFormik toggleModal={toggleModal} formSubmitHandler={addContact} contacts={contacts}/>
+            <ContactFormik contactInfo={contactInfo} toggleModal={toggleModal} formSubmitHandler={{addContact, editContact}} contacts={contacts}/>
             <IconButton onClick={toggleModal} aria-label="Close Modal" classNames={s.iconButtonCloseModal}>
                 <CloseIcon width="20" height="20" />
             </IconButton>
           </Modal>)}
           <h2 className={s.title}>Contacts</h2>
           <Filter value={filter} onChange={changeFilter} />
-          <ContactList />
+          <ContactList toggleModal={toggleModal}/>
           {loading && <h1>is loading...</h1>}
           {error && <h1>{error.message}</h1>}
         </>
