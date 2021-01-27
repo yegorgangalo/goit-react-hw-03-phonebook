@@ -1,0 +1,34 @@
+{
+  "contacts": [
+    {
+      "name": "dfgdg",
+      "number": "345345",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "JS"
+      ],
+      "id": 1
+    },
+    {
+      "name": "dfdg",
+      "number": "345",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "Git"
+      ],
+      "id": 2
+    },
+    {
+      "name": "qw",
+      "number": "12",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "HTML"
+      ],
+      "id": 3
+    }
+  ]
+}

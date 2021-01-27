@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import PropTypes from 'prop-types';
 import IconButton from '../IconButton';
 import s from './ContactForm.module.css';
@@ -18,8 +18,8 @@ function ContactFormik ({ contacts, formSubmitHandler, toggleModal }) {
   const expLevel = ['junior', 'middle', 'senior'];
   const skills = ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React'];
 
-  const isDisabled = (isSubmitting, values) => {
-    const { experience, licence, name, number, skills } = values;
+  const isDisabled = (isSubmitting, formValues) => {
+    const { experience, licence, name, number, skills } = formValues;
     return isSubmitting || experience === '' || !licence || name === '' || number === '' || skills.length === 0;
   }
 
@@ -38,7 +38,8 @@ function ContactFormik ({ contacts, formSubmitHandler, toggleModal }) {
                 return;
               }
 
-              formSubmitHandler({...values, id: uuidv4()});
+              // formSubmitHandler({...values, id: uuidv4()});
+              formSubmitHandler(values);
               setSubmitting(false);
               toggleModal();
               resetForm(defaultFormikStateValues);

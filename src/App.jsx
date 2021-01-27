@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ContactFormik from './components/ContactForm';
 import Filter from './components/Filter';
 import ContactList from './components/ContactList';
@@ -7,21 +7,27 @@ import IconButton from './components/IconButton';
 import { ReactComponent as CloseIcon } from './icon/close.svg';
 import s from './App.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { getItems, getFilter } from './redux/contacts/contacts-selectors';
+import { getItems, getFilter, getLoading } from './redux/contacts/contacts-selectors';
+import * as contactsOperations from './redux/contacts/contacts-operations';
 import * as contactsActions from './redux/contacts/contacts-actions';
 
 function App () {
   const [showModal, setShowModal] = useState(false);
   const contacts = useSelector(getItems);
   const filter = useSelector(getFilter);
+  const loading = useSelector(getLoading);
   const dispatch = useDispatch();
+
+  const changeFilter = ({ target }) => dispatch(contactsActions.changeFilter(target.value));
+  const addContact = (value) => dispatch(contactsOperations.addContact(value));
+
+  useEffect(() => {
+    dispatch(contactsOperations.getContacts());
+  }, [dispatch])
 
     const toggleModal = () => {
       setShowModal(value => !value);
     }
-
-    const changeFilter = ({ target }) => dispatch(contactsActions.changeFilter(target.value));
-    const addContact = value => dispatch(contactsActions.addContact(value));
 
       return (
         <>
@@ -36,7 +42,8 @@ function App () {
           </Modal>)}
           <h2 className={s.title}>Contacts</h2>
           <Filter value={filter} onChange={changeFilter} />
-          <ContactList/>
+          <ContactList />
+          {loading && <h1>is loading...</h1>}
         </>
       )
 }

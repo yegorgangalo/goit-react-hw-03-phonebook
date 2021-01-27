@@ -1,13 +1,13 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import * as contactsActions from '../../redux/contacts/contacts-actions';
+import * as operations from '../../redux/contacts/contacts-operations';
 import IconButton from '../IconButton';
 import { ReactComponent as DeleteIcon } from '../../icon/delete.svg';
 import s from './ContactItem.module.css';
 
 function ContactItem({ id, name, number, experience, skills }) {
     const dispatch = useDispatch();
-    const deleteContact = (contactId) => dispatch(contactsActions.deleteContact(contactId));
+    const deleteContact = (contactId) => dispatch(operations.deleteContact(contactId));
     return (
         <>
             <span className={s.point}>{name}:</span>
