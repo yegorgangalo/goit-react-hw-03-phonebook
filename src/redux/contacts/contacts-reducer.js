@@ -2,8 +2,9 @@ import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 import * as actions from './contacts-actions';
 
-const { getContactSuccess, addContactSuccess, deleteContactSuccess, editContactSuccess, changeFilter } = actions;
+const { fetchContactSuccess, addContactSuccess, deleteContactSuccess, editContactSuccess, changeFilter } = actions;
 
+/* ---------------ITEMS_REDUCER---------------------- */
 const initialState = [
     {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56', experience: 'junior', skills: ['HTML', 'CSS']},
     {id: 'id-2', name: 'Hermione Kline', number: '443-89-12', experience: 'middle', skills: ['HTML', 'CSS', 'JS']},
@@ -17,19 +18,22 @@ const items = createReducer(initialState, {
     [addContactSuccess]: (state, { payload }) => [...state, payload],
     [deleteContactSuccess]: (state, { payload }) => state.filter(({ id }) => id !== payload),
     [editContactSuccess]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
-    [getContactSuccess]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
-    // [getContactSuccess]: (state, { payload }) => payload,
+    [fetchContactSuccess]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
+    // [fetchContactSuccess]: (state, { payload }) => payload,
 });
 
+/* ---------------FILTER_REDUCER---------------------- */
 const filter = createReducer('', {
     [changeFilter]: ( _ , { payload }) => payload.toLowerCase(),
 })
 
+/* ---------------LOAD_REDUCER---------------------- */
 const toggleLoading = (state) => !state;
 const reducerLoadingObj = Object.values(actions)
     .reduce((accObj, action) => action !== changeFilter ? ({ ...accObj, [action]: toggleLoading }) : accObj, {});
 const loading = createReducer(false, reducerLoadingObj);
 
+/* ---------------ERROR_REDUCER---------------------- */
 const reducerErrorObj = Object.values(actions)
     .reduce((accObj, { type }) => {
         if (type.includes('Error')) {
@@ -42,8 +46,8 @@ const reducerErrorObj = Object.values(actions)
         }
         return accObj;
     }, {});
-console.log(reducerErrorObj);
 const error = createReducer(null, reducerErrorObj);
+/* ---------------------------------------------------- */
 
 export default combineReducers({
   items,

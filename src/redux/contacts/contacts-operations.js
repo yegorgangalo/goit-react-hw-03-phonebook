@@ -1,7 +1,7 @@
 // import axios from 'axios';
 // axios.defaults.baseURL = 'http://localhost:3004';
 import {
-    getContactRequest, getContactSuccess, getContactError,
+    fetchContactRequest, fetchContactSuccess, fetchContactError,
     addContactRequest, addContactSuccess, addContactError,
     deleteContactRequest, deleteContactSuccess, deleteContactError,
     editContactRequest, editContactSuccess, editContactError
@@ -9,17 +9,17 @@ import {
 
 const BASE_URL = 'http://localhost:3004';
 
-export const getContacts = () => (dispatch) => {
-    dispatch(getContactRequest());
+export const fetchContacts = () => (dispatch) => {
+    dispatch(fetchContactRequest());
     fetch(`${BASE_URL}/contacts`)
         .then(response => response.json())
-        .then(data => dispatch(getContactSuccess(data)))
-        .catch(error => dispatch(getContactError(error)));
+        .then(data => dispatch(fetchContactSuccess(data)))
+        .catch(error => dispatch(fetchContactError(error)));
 
     //  axios
-    // .get('/contacts')
-    // .then(data => dispatch(getContactSuccess(data)))
-    // .catch(error => dispatch(getContactError(error)));
+    // .fetch('/contacts')
+    // .then(data => dispatch(fetchContactSuccess(data)))
+    // .catch(error => dispatch(fetchContactError(error)));
 }
 
 export const addContact = (contact) => (dispatch) => {

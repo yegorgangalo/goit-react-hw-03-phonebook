@@ -6,6 +6,17 @@
   position: absolute;
   top: 5px;
   right: 5px;
+  color: rgb(88, 88, 88);
+}
+
+.iconButtonCloseModal svg {
+  width: 2em;
+  height: 2em;
+}
+
+.iconButtonCloseModal:hover,
+.iconButtonCloseModal:focus {
+  color: rgb(160, 36, 36);
 }
 
 .iconButtonOpenModal {

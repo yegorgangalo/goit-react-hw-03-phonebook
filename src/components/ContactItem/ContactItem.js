@@ -1,12 +1,14 @@
-import React from 'react';
+import {useContext} from 'react';
 import { useDispatch } from 'react-redux';
+import Context from 'components/Context';
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
 import {deleteContact} from 'redux/contacts/contacts-operations';
 import IconButton from 'components/IconButton';
 import s from './ContactItem.module.css';
 
-function ContactItem({ id, name, number, experience, skills, toggleModal }) {
+function ContactItem({ id, name, number, experience, skills }) {
+    const {toggleModal} = useContext(Context);
     const dispatch = useDispatch();
     const deleteContactById = () => dispatch(deleteContact(id));
     const contactInfo = { id, name, number, experience, skills };
@@ -29,9 +31,3 @@ function ContactItem({ id, name, number, experience, skills, toggleModal }) {
 }
 
 export default ContactItem;
-
-// const mapDispatchToProps = (dispatch) => ({
-//   deleteContact: value => dispatch(contactsActions.deleteContact(value)),
-// });
-
-// export default connect(null, mapDispatchToProps)(ContactItem);

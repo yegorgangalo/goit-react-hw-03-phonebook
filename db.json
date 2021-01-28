@@ -31,12 +31,15 @@
       "id": 3
     },
     {
-      "name": "hhjk",
-      "number": "456",
-      "experience": "junior",
+      "name": "rachel",
+      "number": "232309093",
+      "experience": "middle",
       "licence": true,
       "skills": [
-        "CSS"
+        "CSS",
+        "JS",
+        "SCSS",
+        "React"
       ],
       "id": 4
     },
