@@ -17,9 +17,9 @@ const defaultStateValues = {
 };
 
 /* ------------------------------------------------------------------------------------------------------------ */
-const noDublicateValidation = (values, contactInfo, contacts, setSubmitting) => {
+const noDublicateValidation = (values, contactEditInfo, contacts, setSubmitting) => {
   const { name, number } = values;
-  if(!contactInfo.id && contacts.some(contact => contact.name===name || contact.number===number) ){
+  if(!contactEditInfo.id && contacts.some(contact => contact.name===name || contact.number===number) ){
     alert(`Contact with such ${name} or ${number} is already in Phonebook`);
     setSubmitting(false);
     return;
@@ -32,8 +32,8 @@ const isDisabledBtn = (isSubmitting, formValues) => {
 }
 
 /* ------------------------------------------------------------------------------------------------------------ */
-function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactInfo }) {
-  const defaultFormikStateValues = contactInfo.id ? {...contactInfo, licence: true} : defaultStateValues;
+function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactEditInfo }) {
+  const defaultFormikStateValues = contactEditInfo.id ? {...contactEditInfo, licence: true} : defaultStateValues;
 
   return <Formik
           initialValues={defaultFormikStateValues}
@@ -42,9 +42,9 @@ function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactInfo 
             number: Yup.number().max(1000000000000, 'Too Long!').positive().integer().required('Required'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            noDublicateValidation(values, contactInfo, contacts, setSubmitting);
-            const {addContact, editContact}=formSubmitHandler;
-            contactInfo.id ? editContact({ ...values, id: contactInfo.id }) : addContact(values);
+            noDublicateValidation(values, contactEditInfo, contacts, setSubmitting);
+            const {onAddContact, onEditContact}=formSubmitHandler;
+            contactEditInfo.id ? onEditContact({ ...values, id: contactEditInfo.id }) : onAddContact(values);
             setSubmitting(false);
             resetForm(defaultStateValues);
             toggleModal();
@@ -94,8 +94,8 @@ function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactInfo 
 
 ContactFormik.propTypes = {
         formSubmitHandler: PropTypes.shape({
-          addContact: PropTypes.func.isRequired,
-          editContact: PropTypes.func.isRequired,
+          onAddContact: PropTypes.func.isRequired,
+          onEditContact: PropTypes.func.isRequired,
         }),
         contacts: PropTypes.arrayOf(
         PropTypes.shape({

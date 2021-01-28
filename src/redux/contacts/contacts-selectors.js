@@ -5,14 +5,6 @@ export const getFilter = state => state.contacts.filter;
 export const getLoading = state => state.contacts.loading;
 export const getError = state => state.contacts.error;
 
-// export const getFilteredContacts = state => {
-//     const contacts = getItems(state);
-//     const filter = getFilter(state);
-//     return contacts.filter(contact =>
-//       Object.values(contact)
-//         .some(val => val.toString().toLowerCase().includes(filter)));
-// }
-
 export const getFilteredContacts = createSelector(
     [getItems, getFilter],
     (contacts, filter) =>
