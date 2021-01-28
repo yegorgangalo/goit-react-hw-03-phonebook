@@ -30,9 +30,19 @@ const reducerLoadingObj = Object.values(actions)
     .reduce((accObj, action) => action !== changeFilter ? ({ ...accObj, [action]: toggleLoading }) : accObj, {});
 const loading = createReducer(false, reducerLoadingObj);
 
-const setError = (_, { payload }) => payload;
 const reducerErrorObj = Object.values(actions)
-    .reduce((accObj, {type}) => type.includes('Error') ? ({ ...accObj, [type]: setError }) : accObj, {});
+    .reduce((accObj, { type }) => {
+        if (type.includes('Error')) {
+            const setError = (_, { payload }) => payload;
+            return ({ ...accObj, [type]: setError });
+        };
+        if (type.includes('Request')) {
+            const resetError = () => null;
+            return ({ ...accObj, [type]: resetError })
+        }
+        return accObj;
+    }, {});
+console.log(reducerErrorObj);
 const error = createReducer(null, reducerErrorObj);
 
 export default combineReducers({

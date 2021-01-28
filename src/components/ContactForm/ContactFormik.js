@@ -2,7 +2,7 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
-import IconButton from '../IconButton';
+import IconButton from 'components/IconButton';
 import s from './ContactForm.module.css';
 
 /* ------------------------------------------------------------------------------------------------------------ */
@@ -86,7 +86,7 @@ function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactEditI
                 classNames={s.iconButtonAddContact}
                 aria-label="submit button"
                 disabled={isDisabledBtn(isSubmitting, values)}
-            > Add Contact </IconButton>
+        > {contactEditInfo.id ? 'Edit Contact' : 'Add Contact' } </IconButton>
          </Form>
        )}
   </Formik>

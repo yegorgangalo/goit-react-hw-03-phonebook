@@ -5,10 +5,6 @@ import s from './Modal.module.css';
 
 function Modal ({onClose, children}) {
 
-    // useEffect(() => {
-    //     focusBlock.current.focus();
-    // }, [])
-
     useEffect(() => {
         const keydownCloseModal = ({ code }) => { code === "Escape" && onClose() };
         window.addEventListener('keydown', keydownCloseModal);

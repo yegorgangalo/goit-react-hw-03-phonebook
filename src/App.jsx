@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import ContactFormik from './components/ContactForm';
-import Filter from './components/Filter';
-import ContactList from './components/ContactList';
-import Modal from './components/Modal';
-import IconButton from './components/IconButton';
-import { ReactComponent as CloseIcon } from './icon/close.svg';
+import ContactFormik from 'components/ContactForm';
+import Filter from 'components/Filter';
+import ContactList from 'components/ContactList';
+import Modal from 'components/Modal';
+import IconButton from 'components/IconButton';
 import s from './App.module.css';
+import { ReactComponent as CloseIcon } from './icon/close.svg';
 import { getContacts, addContact, editContact, changeFilter, getItems, getFilter, getLoading, getError } from './redux/contacts';
-// const { getItems, getFilter, getLoading, getError } = contactsSelectors;
 /* ----------------------------------------------------------------------- */
 
 function App () {

@@ -66,10 +66,12 @@
     {
       "name": "yegor",
       "number": "0932323231",
-      "experience": "middle",
+      "experience": "senior",
       "licence": true,
       "skills": [
-        "Git"
+        "Git",
+        "HTML",
+        "CSS"
       ],
       "id": 7
     },
@@ -86,17 +88,6 @@
         "React"
       ],
       "id": 8
-    },
-    {
-      "name": "asasasas",
-      "number": "453453",
-      "experience": "middle",
-      "licence": true,
-      "skills": [
-        "CSS",
-        "Git"
-      ],
-      "id": 9
     }
   ]
 }

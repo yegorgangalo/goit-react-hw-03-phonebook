@@ -1,8 +1,8 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
-import {contactsReducer} from './contacts';
 import { /* persistStore, */ /* persistReducer, */ FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage';
+import logger from 'redux-logger';
+import {contactsReducer} from 'redux/contacts';
 
 // const myMiddleware = store => next => action => {
 //   console.log('my middleware', action);

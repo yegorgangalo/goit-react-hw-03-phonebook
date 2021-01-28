@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import {deleteContact} from '../../redux/contacts/contacts-operations';
-import IconButton from '../IconButton';
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDelete } from 'react-icons/md';
+import {deleteContact} from 'redux/contacts/contacts-operations';
+import IconButton from 'components/IconButton';
 import s from './ContactItem.module.css';
 
 function ContactItem({ id, name, number, experience, skills, toggleModal }) {

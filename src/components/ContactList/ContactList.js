@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import s from './ContactList.module.css';
-import ContactItem from '../ContactItem';
 import { useSelector } from 'react-redux';
-import { getFilteredContacts} from '../../redux/contacts/contacts-selectors';
+import ContactItem from 'components/ContactItem';
+import { getFilteredContacts} from 'redux/contacts/contacts-selectors';
+import s from './ContactList.module.css';
 
 function ContactList({toggleModal}) {
   const contacts = useSelector(getFilteredContacts);
