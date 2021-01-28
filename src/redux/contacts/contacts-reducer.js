@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 import * as actions from './contacts-actions';
 
-const { fetchContactSuccess, addContactSuccess, deleteContactSuccess, editContactSuccess, changeFilter } = actions;
+const { fetchContactSuccess, addContactSuccess, deleteContactSuccess, patchContactSuccess, changeFilter, editContact } = actions;
 
 /* ---------------ITEMS_REDUCER---------------------- */
 const initialState = [
@@ -17,7 +17,7 @@ const initialState = [
 const items = createReducer(initialState, {
     [addContactSuccess]: (state, { payload }) => [...state, payload],
     [deleteContactSuccess]: (state, { payload }) => state.filter(({ id }) => id !== payload),
-    [editContactSuccess]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
+    [patchContactSuccess]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
     [fetchContactSuccess]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
     // [fetchContactSuccess]: (state, { payload }) => payload,
 });
@@ -27,10 +27,15 @@ const filter = createReducer('', {
     [changeFilter]: ( _ , { payload }) => payload.toLowerCase(),
 })
 
+/* ---------------EDITCONTACT_REDUCER---------------------- */
+const editItem = createReducer(null, {
+    [editContact]: ( _ , { payload }) => payload,
+})
+
 /* ---------------LOAD_REDUCER---------------------- */
 const toggleLoading = (state) => !state;
 const reducerLoadingObj = Object.values(actions)
-    .reduce((accObj, action) => action !== changeFilter ? ({ ...accObj, [action]: toggleLoading }) : accObj, {});
+    .reduce((accObj, action) => action !== changeFilter && action !== editContact ? ({ ...accObj, [action]: toggleLoading }) : accObj, {});
 const loading = createReducer(false, reducerLoadingObj);
 
 /* ---------------ERROR_REDUCER---------------------- */
@@ -54,4 +59,5 @@ export default combineReducers({
   filter,
   loading,
   error,
+  editItem,
 });

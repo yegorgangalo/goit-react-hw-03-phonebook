@@ -4,7 +4,7 @@ import {
     fetchContactRequest, fetchContactSuccess, fetchContactError,
     addContactRequest, addContactSuccess, addContactError,
     deleteContactRequest, deleteContactSuccess, deleteContactError,
-    editContactRequest, editContactSuccess, editContactError
+    patchContactRequest, patchContactSuccess, patchContactError
 } from './contacts-actions';
 
 const BASE_URL = 'http://localhost:3004';
@@ -56,8 +56,8 @@ export const deleteContact = (id) => (dispatch) => {
     // .catch(error => dispatch(deleteContactError(error)));
 }
 
-export const editContact = (contact) => (dispatch) => {
-    dispatch(editContactRequest());
+export const patchContact = (contact) => (dispatch) => {
+    dispatch(patchContactRequest());
     const options = {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -65,11 +65,11 @@ export const editContact = (contact) => (dispatch) => {
     }
     fetch(`${BASE_URL}/contacts/${contact.id}`, options)
         .then(response => response.json())
-        .then(data => dispatch(editContactSuccess(data)))
-        .catch(error => dispatch(editContactError(error)));
+        .then(data => dispatch(patchContactSuccess(data)))
+        .catch(error => dispatch(patchContactError(error)));
 
     //  axios
     // .post(`/contacts/${id}`, contact)
-    // .then(data => dispatch(editContactSuccess(data)))
-    // .catch(error => dispatch(editContactError(error)));
+    // .then(data => dispatch(patchContactSuccess(data)))
+    // .catch(error => dispatch(patchContactError(error)));
 }

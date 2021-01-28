@@ -1,39 +1,22 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addContact, patchContact, getItems } from 'redux/contacts';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import IconButton from 'components/IconButton';
 import s from './ContactForm.module.css';
+import { getEditItem } from 'redux/contacts/contacts-selectors';
 
 /* ------------------------------------------------------------------------------------------------------------ */
-const expLevel = ['junior', 'middle', 'senior'];
-const skills = ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React'];
-const defaultStateValues = {
-  name: '',
-  number: '',
-  experience: '',
-  licence: false,
-  skills: [],
-};
+function ContactFormik({ toggleModal }) {
+  const contactEditInfo = useSelector(getEditItem);
+  const defaultFormikStateValues = contactEditInfo ? { ...contactEditInfo, licence: true } : defaultStateValues;
 
-/* ------------------------------------------------------------------------------------------------------------ */
-const noDublicateValidation = (values, contactEditInfo, contacts, setSubmitting) => {
-  const { name, number } = values;
-  if(!contactEditInfo.id && contacts.some(contact => contact.name===name || contact.number===number) ){
-    alert(`Contact with such ${name} or ${number} is already in Phonebook`);
-    setSubmitting(false);
-    return;
-  }
-}
-
-const isDisabledBtn = (isSubmitting, formValues) => {
-  const { experience, licence, name, number, skills } = formValues;
-  return isSubmitting || experience === '' || !licence || name === '' || number === '' || skills.length === 0;
-}
-
-/* ------------------------------------------------------------------------------------------------------------ */
-function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactEditInfo }) {
-  const defaultFormikStateValues = contactEditInfo.id ? {...contactEditInfo, licence: true} : defaultStateValues;
+  const dispatch = useDispatch();
+  const onAddContact = (value) => dispatch(addContact(value));
+  const onPatchContact = (value) => dispatch(patchContact(value));
+  const contacts = useSelector(getItems);
 
   return <Formik
           initialValues={defaultFormikStateValues}
@@ -43,8 +26,7 @@ function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactEditI
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
             noDublicateValidation(values, contactEditInfo, contacts, setSubmitting);
-            const {onAddContact, onEditContact}=formSubmitHandler;
-            contactEditInfo.id ? onEditContact({ ...values, id: contactEditInfo.id }) : onAddContact(values);
+            contactEditInfo ? onPatchContact({ ...values, id: contactEditInfo.id }) : onAddContact(values);
             setSubmitting(false);
             resetForm(defaultStateValues);
             toggleModal();
@@ -86,12 +68,38 @@ function ContactFormik ({ contacts, formSubmitHandler, toggleModal, contactEditI
                 classNames={s.iconButtonAddContact}
                 aria-label="submit button"
                 disabled={isDisabledBtn(isSubmitting, values)}
-        > {contactEditInfo.id ? 'Edit Contact' : 'Add Contact' } </IconButton>
+            > {contactEditInfo ? 'Edit Contact' : 'Add Contact' } </IconButton>
          </Form>
        )}
   </Formik>
 }
 
+/* ------------------------------------------------------------------------------------------------------------ */
+const expLevel = ['junior', 'middle', 'senior'];
+const skills = ['HTML', 'CSS', 'JS', 'SCSS', 'Git', 'React'];
+const defaultStateValues = {
+  name: '',
+  number: '',
+  experience: '',
+  licence: false,
+  skills: [],
+};
+
+/* ------------------------------------------------------------------------------------------------------------ */
+function noDublicateValidation (values, contactEditInfo, contacts, setSubmitting) {
+  const { name, number } = values;
+  if(!contactEditInfo && contacts.some(contact => contact.name===name || contact.number===number) ){
+    alert(`Contact with such ${name} or ${number} is already in Phonebook`);
+    setSubmitting(false);
+    return;
+  }
+}
+
+function isDisabledBtn (isSubmitting, formValues) {
+  const { experience, licence, name, number, skills } = formValues;
+  return isSubmitting || experience === '' || !licence || name === '' || number === '' || skills.length === 0;
+}
+/* ------------------------------------------------- */
 ContactFormik.propTypes = {
         formSubmitHandler: PropTypes.shape({
           onAddContact: PropTypes.func.isRequired,
@@ -103,5 +111,5 @@ ContactFormik.propTypes = {
           number: PropTypes.string.isRequired,
         })),
     }
-
+/* ------------------------------------------------- */
 export default ContactFormik;

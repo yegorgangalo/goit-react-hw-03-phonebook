@@ -8,49 +8,45 @@ import Modal from 'components/Modal';
 import IconButton from 'components/IconButton';
 import s from './App.module.css';
 import { IoClose } from 'react-icons/io5';
-import { fetchContacts, addContact, editContact, changeFilter, getItems, getFilter, getLoading, getError } from './redux/contacts';
+import { fetchContacts, getLoading, getError, getItems } from 'redux/contacts';
 /* ----------------------------------------------------------------------- */
 
 function App () {
   const [showModal, setShowModal] = useState(false);
-  const [contactEditInfo, setContactEditInfo] = useState(null);
 
-  const contacts = useSelector(getItems);
-  const filter = useSelector(getFilter);
   const loading = useSelector(getLoading);
   const error = useSelector(getError);
+  const contacts = useSelector(getItems);
   const dispatch = useDispatch();
-
-  const onChangeFilter = ({ target }) => dispatch(changeFilter(target.value));
-  const onAddContact = (value) => dispatch(addContact(value));
-  const onEditContact = (value) => dispatch(editContact(value));
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch])
 
-    const toggleModal = (contactEditInfo=null) => {
-      setShowModal(value => !value);
-      setContactEditInfo(contactEditInfo);
-    }
+  const toggleModal = () => {
+    setShowModal(value => !value);
+  }
 
       return (
-        <Context.Provider value={{toggleModal}}>
+        <>
           <h1 className={s.title}>Phonebook</h1>
           <IconButton onClick={toggleModal} aria-label="Open Modal" classNames={s.iconButtonOpenModal}> Add Contact </IconButton>
           {showModal && (
-          <Modal onClose={toggleModal}>
-            <ContactFormik contactEditInfo={contactEditInfo} toggleModal={toggleModal} formSubmitHandler={{onAddContact, onEditContact}} contacts={contacts}/>
-            <IconButton onClick={toggleModal} aria-label="Close Modal" classNames={s.iconButtonCloseModal}>
-                <IoClose/>
-            </IconButton>
-          </Modal>)}
+            <Modal onClose={toggleModal}>
+              <ContactFormik toggleModal={toggleModal}/>
+              <IconButton onClick={toggleModal} aria-label="Close Modal" classNames={s.iconButtonCloseModal}>
+                  <IoClose/>
+              </IconButton>
+            </Modal>
+          )}
           <h2 className={s.title}>Contacts</h2>
-          <Filter value={filter} onChange={onChangeFilter} />
-          <ContactList/>
+          {contacts.length>1 && (<Filter/>)}
+          <Context.Provider value={{toggleModal}}>
+            <ContactList/>
+          </Context.Provider>
           {loading && <h1>is loading...</h1>}
           {error && <h1>{error.message}</h1>}
-        </Context.Provider>
+        </>
       )
 }
 
