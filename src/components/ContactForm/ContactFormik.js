@@ -25,7 +25,9 @@ function ContactFormik({ toggleModal }) {
             number: Yup.number().max(1000000000000, 'Too Long!').positive().integer().required('Required'),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            noDublicateValidation(values, contactEditInfo, contacts, setSubmitting);
+            if (isContactDublicate(values, contactEditInfo, contacts, setSubmitting)) {
+              return;
+            }
             contactEditInfo ? onPatchContact({ ...values, id: contactEditInfo.id }) : onAddContact(values);
             setSubmitting(false);
             resetForm(defaultStateValues);
@@ -86,13 +88,14 @@ const defaultStateValues = {
 };
 
 /* ------------------------------------------------------------------------------------------------------------ */
-function noDublicateValidation (values, contactEditInfo, contacts, setSubmitting) {
+function isContactDublicate (values, contactEditInfo, contacts, setSubmitting) {
   const { name, number } = values;
   if(!contactEditInfo && contacts.some(contact => contact.name===name || contact.number===number) ){
     alert(`Contact with such ${name} or ${number} is already in Phonebook`);
     setSubmitting(false);
-    return;
+    return true;
   }
+  return false;
 }
 
 function isDisabledBtn (isSubmitting, formValues) {

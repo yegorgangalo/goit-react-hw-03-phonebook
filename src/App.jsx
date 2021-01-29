@@ -8,7 +8,7 @@ import Modal from 'components/Modal';
 import IconButton from 'components/IconButton';
 import s from './App.module.css';
 import { IoClose } from 'react-icons/io5';
-import { fetchContacts, getLoading, getError, getItems } from 'redux/contacts';
+import { editContact, fetchContacts, getLoading, getError, getItems } from 'redux/contacts';
 /* ----------------------------------------------------------------------- */
 
 function App () {
@@ -27,10 +27,15 @@ function App () {
     setShowModal(value => !value);
   }
 
+  const openFreshModal = () => {
+    toggleModal();
+    dispatch(editContact(null));
+  }
+
       return (
         <>
           <h1 className={s.title}>Phonebook</h1>
-          <IconButton onClick={toggleModal} aria-label="Open Modal" classNames={s.iconButtonOpenModal}> Add Contact </IconButton>
+          <IconButton onClick={openFreshModal} aria-label="Open Modal" classNames={s.iconButtonOpenModal}> Add Contact </IconButton>
           {showModal && (
             <Modal onClose={toggleModal}>
               <ContactFormik toggleModal={toggleModal}/>

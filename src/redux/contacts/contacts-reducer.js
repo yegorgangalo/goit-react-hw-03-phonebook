@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
 import * as actions from './contacts-actions';
-
-const { fetchContactSuccess, addContactSuccess, deleteContactSuccess, patchContactSuccess, changeFilter, editContact } = actions;
+import * as operations from './contacts-operations';
+const { changeFilter, editContact } = actions;
+const { fetchContacts, addContact, deleteContact, patchContact } = operations;
 
 /* ---------------ITEMS_REDUCER---------------------- */
 const initialState = [
@@ -15,11 +16,11 @@ const initialState = [
 ];
 
 const items = createReducer(initialState, {
-    [addContactSuccess]: (state, { payload }) => [...state, payload],
-    [deleteContactSuccess]: (state, { payload }) => state.filter(({ id }) => id !== payload),
-    [patchContactSuccess]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
-    [fetchContactSuccess]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
-    // [fetchContactSuccess]: (state, { payload }) => payload,
+    [addContact.fulfilled]: (state, { payload }) => [...state, payload],
+    [deleteContact.fulfilled]: (state, { payload }) => state.filter(({ id }) => id !== payload),
+    [patchContact.fulfilled]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
+    [fetchContacts.fulfilled]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
+    // [fetchContacts.fulfilled]: (state, { payload }) => payload,
 });
 
 /* ---------------FILTER_REDUCER---------------------- */
@@ -29,29 +30,26 @@ const filter = createReducer('', {
 
 /* ---------------EDITCONTACT_REDUCER---------------------- */
 const editItem = createReducer(null, {
-    [editContact]: ( _ , { payload }) => payload,
+    [editContact]: (_, { payload }) => payload,
+    [patchContact.fulfilled]: () => null,
 })
 
 /* ---------------LOAD_REDUCER---------------------- */
 const toggleLoading = (state) => !state;
-const reducerLoadingObj = Object.values(actions)
-    .reduce((accObj, action) => action !== changeFilter && action !== editContact ? ({ ...accObj, [action]: toggleLoading }) : accObj, {});
+const reducerLoadingObj = Object.values(operations)
+    .reduce((accObj, operation) =>
+        ({ ...accObj, [operation.fulfilled]: toggleLoading, [operation.rejected]: toggleLoading, [operation.pending]: toggleLoading }), {});
 const loading = createReducer(false, reducerLoadingObj);
 
 /* ---------------ERROR_REDUCER---------------------- */
-const reducerErrorObj = Object.values(actions)
-    .reduce((accObj, { type }) => {
-        if (type.includes('Error')) {
-            const setError = (_, { payload }) => payload;
-            return ({ ...accObj, [type]: setError });
-        };
-        if (type.includes('Request')) {
-            const resetError = () => null;
-            return ({ ...accObj, [type]: resetError })
-        }
-        return accObj;
+const reducerErrorObj = Object.values(operations)
+    .reduce((accObj, operation) => {
+        const setError = (_, { error }) => error;
+        const resetError = () => null;
+        return ({ ...accObj, [operation.rejected]: setError, [operation.pending]: resetError });
     }, {});
 const error = createReducer(null, reducerErrorObj);
+console.log(reducerErrorObj);
 /* ---------------------------------------------------- */
 
 export default combineReducers({
