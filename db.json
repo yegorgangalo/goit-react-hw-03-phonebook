@@ -31,24 +31,14 @@
       "id": 7
     },
     {
-      "name": "faster",
-      "number": "111110000",
+      "name": "name",
+      "number": "12120000",
       "experience": "middle",
       "licence": true,
       "skills": [
-        "SCSS"
+        "Git"
       ],
       "id": 8
-    },
-    {
-      "name": "anton",
-      "number": "0022030",
-      "experience": "middle",
-      "licence": true,
-      "skills": [
-        "React"
-      ],
-      "id": 10
     }
   ]
 }
