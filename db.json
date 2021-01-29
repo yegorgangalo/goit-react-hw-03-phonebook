@@ -1,8 +1,8 @@
 {
   "contacts": [
     {
-      "name": "name222333",
-      "number": "232323000",
+      "name": "cen",
+      "number": "123",
       "experience": "middle",
       "licence": true,
       "skills": [
@@ -11,14 +11,14 @@
       "id": 1
     },
     {
-      "name": "yegor",
-      "number": "000000456",
+      "name": "dfdg",
+      "number": "45646",
       "experience": "middle",
       "licence": true,
       "skills": [
-        "SCSS"
+        "HTML"
       ],
-      "id": 3
+      "id": 2
     }
   ]
 }

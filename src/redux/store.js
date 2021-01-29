@@ -12,7 +12,7 @@ import {contactsReducer} from 'redux/contacts';
 const middleware = [
   ...getDefaultMiddleware({
     serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER, 'contacts/fetch/rejected'],
     },
   }),
   // myMiddleware,

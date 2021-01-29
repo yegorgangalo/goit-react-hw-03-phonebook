@@ -16,7 +16,12 @@ const initialState = [
 ];
 
 const items = createReducer(initialState, {
-    [addContact.fulfilled]: (state, { payload }) => [...state, payload],
+    // [addContact.fulfilled]: (state, { payload }) => [...state, payload],
+    // [deleteContact.fulfilled]: (state, { payload }) => state.filter(({ id }) => id !== payload),
+    // [patchContact.fulfilled]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
+    // [fetchContacts.fulfilled]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
+    // // [fetchContacts.fulfilled]: (state, { payload }) => payload,
+    [addContact.fulfilled]: (state, { payload }) => [...state, {...payload}],
     [deleteContact.fulfilled]: (state, { payload }) => state.filter(({ id }) => id !== payload),
     [patchContact.fulfilled]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
     [fetchContacts.fulfilled]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
@@ -44,7 +49,11 @@ const loading = createReducer(false, reducerLoadingObj);
 /* ---------------ERROR_REDUCER---------------------- */
 const reducerErrorObj = Object.values(operations)
     .reduce((accObj, operation) => {
-        const setError = (_, { error }) => error;
+        // const setError = (_, { error }) => error;
+        const setError = (_, { payload }) => {
+            const { status,config,request,statusText} = payload;
+            return `Error ${status}. Can't ${config.method} by ${request.responseURL}. ${statusText}`;
+        };
         const resetError = () => null;
         return ({ ...accObj, [operation.rejected]: setError, [operation.pending]: resetError });
     }, {});

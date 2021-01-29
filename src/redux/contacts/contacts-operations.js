@@ -5,32 +5,80 @@ axios.defaults.baseURL = 'http://localhost:3004';
 
 export const fetchContacts = createAsyncThunk(
     'contacts/fetch',
-    async () => {
-        const {data} = await axios.get('/contacts');
+  async (_, { rejectWithValue }) => {
+    try {
+      const {data} = await axios.get('/contacts');
         return data;
+    } catch (error) {
+      return rejectWithValue(error.response)
     }
+  }
 )
 
 export const addContact = createAsyncThunk(
-    'contacts/add',
-    async (contact) => {
-        const {data} = await axios.post('/contacts', contact);
+    'contacts/fetch',
+  async (contact, { rejectWithValue }) => {
+    try {
+      const {data} = await axios.post('/contacts', contact);
         return data;
+    } catch (error) {
+      return rejectWithValue(error.response)
     }
+  }
 )
 
 export const deleteContact = createAsyncThunk(
-    'contacts/delete',
-    async (id) => {
-        await axios.delete(`/contacts/${id}`);
+    'contacts/fetch',
+  async (id, { rejectWithValue }) => {
+    try {
+      await axios.delete(`/contacts/${id}`);
         return id;
+    } catch (error) {
+      return rejectWithValue(error.response)
     }
+  }
 )
 
 export const patchContact = createAsyncThunk(
-    'contacts/patch',
-    async (contact) => {
-        const {data} = await axios.patch(`/contacts/${contact.id}`, contact);
+    'contacts/fetch',
+  async (contact, { rejectWithValue }) => {
+    try {
+      const {data} = await axios.patch(`/contacts/${contact.id}`, contact);
         return data;
+    } catch (error) {
+      return rejectWithValue(error.response)
     }
+  }
 )
+
+// export const fetchContacts = createAsyncThunk(
+//     'contacts/fetch',
+//     async () => {
+//         const {data} = await axios.get('/contacts');
+//         return data;
+//     }
+// )
+
+// export const addContact = createAsyncThunk(
+//     'contacts/add',
+//     async (contact) => {
+//         const {data} = await axios.post('/contacts', contact);
+//         return data;
+//     }
+// )
+
+// export const deleteContact = createAsyncThunk(
+//     'contacts/delete',
+//     async (id) => {
+//         await axios.delete(`/contacts/${id}`);
+//         return id;
+//     }
+// )
+
+// export const patchContact = createAsyncThunk(
+//     'contacts/patch',
+//     async (contact) => {
+//         const {data} = await axios.patch(`/contacts/${contact.id}`, contact);
+//         return data;
+//     }
+// )
