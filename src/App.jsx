@@ -51,7 +51,6 @@ function App () {
           </Context.Provider>
           {loading && <h1>is loading...</h1>}
           {error && <h1>{error}</h1>}
-          {/* {error && <h1>{error.message}</h1>} */}
         </>
       )
 }

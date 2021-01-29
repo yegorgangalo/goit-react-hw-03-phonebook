@@ -19,6 +19,46 @@
         "HTML"
       ],
       "id": 2
+    },
+    {
+      "name": "dfgdg",
+      "number": "345",
+      "experience": "junior",
+      "licence": true,
+      "skills": [
+        "JS"
+      ],
+      "id": 3
+    },
+    {
+      "name": "dfgdgfgh",
+      "number": "34535456456",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "CSS"
+      ],
+      "id": 4
+    },
+    {
+      "name": "dfgdfg",
+      "number": "45646",
+      "experience": "senior",
+      "licence": true,
+      "skills": [
+        "JS"
+      ],
+      "id": 5
+    },
+    {
+      "name": "ert",
+      "number": "123456",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "JS"
+      ],
+      "id": 6
     }
   ]
 }

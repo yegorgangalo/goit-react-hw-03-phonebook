@@ -16,12 +16,7 @@ const initialState = [
 ];
 
 const items = createReducer(initialState, {
-    // [addContact.fulfilled]: (state, { payload }) => [...state, payload],
-    // [deleteContact.fulfilled]: (state, { payload }) => state.filter(({ id }) => id !== payload),
-    // [patchContact.fulfilled]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
-    // [fetchContacts.fulfilled]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
-    // // [fetchContacts.fulfilled]: (state, { payload }) => payload,
-    [addContact.fulfilled]: (state, { payload }) => [...state, {...payload}],
+    [addContact.fulfilled]: (state, { payload }) => [...state, payload],
     [deleteContact.fulfilled]: (state, { payload }) => state.filter(({ id }) => id !== payload),
     [patchContact.fulfilled]: (state, { payload }) => state.map(contact => contact.id === payload.id ? payload : contact),
     [fetchContacts.fulfilled]: (state, { payload }) => payload.length>3 ? payload : [...state, ...payload],
@@ -58,7 +53,6 @@ const reducerErrorObj = Object.values(operations)
         return ({ ...accObj, [operation.rejected]: setError, [operation.pending]: resetError });
     }, {});
 const error = createReducer(null, reducerErrorObj);
-console.log(reducerErrorObj);
 /* ---------------------------------------------------- */
 
 export default combineReducers({
