@@ -30,7 +30,7 @@ export const deleteContact = createAsyncThunk(
 export const patchContact = createAsyncThunk(
     'contacts/patch',
     async (contact) => {
-        const {data} = await axios.patch(`/contact/${contact.id}`, contact);
+        const {data} = await axios.patch(`/contacts/${contact.id}`, contact);
         return data;
     }
 )
