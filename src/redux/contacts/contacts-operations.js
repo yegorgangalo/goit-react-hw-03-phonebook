@@ -12,7 +12,7 @@ const BASE_URL = 'http://localhost:3004';
 export const fetchContacts = () => (dispatch) => {
     dispatch(fetchContactRequest());
     fetch(`${BASE_URL}/contacts`)
-        .then(response => response.json())
+        .then(response => response.ok ? response.json() : Promise.reject(new Error(`Error ${response.status}. ${response.statusText}`)))
         .then(data => dispatch(fetchContactSuccess(data)))
         .catch(error => dispatch(fetchContactError(error)));
 
@@ -30,7 +30,7 @@ export const addContact = (contact) => (dispatch) => {
         body: JSON.stringify(contact),
     }
     fetch(`${BASE_URL}/contacts`, options)
-        .then(response => response.json())
+        .then(response => response.ok ? response.json() : Promise.reject(new Error(`Error ${response.status}. ${response.statusText}`)))
         .then(data => dispatch(addContactSuccess(data)))
         .catch(error => dispatch(addContactError(error)));
 
@@ -46,7 +46,7 @@ export const deleteContact = (id) => (dispatch) => {
         method: 'DELETE',
     }
     fetch(`${BASE_URL}/contacts/${id}`, options)
-        .then(response => response.json())
+        .then(response => response.ok ? response.json() : Promise.reject(new Error(`Error ${response.status}. ${response.statusText}`)))
         .then(() => dispatch(deleteContactSuccess(id)))
         .catch(error => dispatch(deleteContactError(error)));
 
@@ -64,7 +64,9 @@ export const patchContact = (contact) => (dispatch) => {
         body: JSON.stringify(contact),
     }
     fetch(`${BASE_URL}/contacts/${contact.id}`, options)
-        .then(response => response.json())
+        .then(response => response.ok ?
+            response.json() :
+            Promise.reject(new Error(`Error ${response.status}. ${response.statusText}`)))
         .then(data => dispatch(patchContactSuccess(data)))
         .catch(error => dispatch(patchContactError(error)));
 
