@@ -31,7 +31,7 @@
       "id": 7
     },
     {
-      "name": "name",
+      "name": "Vick",
       "number": "12120000",
       "experience": "middle",
       "licence": true,
@@ -39,6 +39,16 @@
         "Git"
       ],
       "id": 8
+    },
+    {
+      "name": "Yegor",
+      "number": "121200094",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "SCSS"
+      ],
+      "id": 9
     }
   ]
 }
