@@ -1,7 +1,7 @@
 {
   "contacts": [
     {
-      "name": "cen",
+      "name": "Kentucky",
       "number": "123",
       "experience": "middle",
       "licence": true,
@@ -11,54 +11,44 @@
       "id": 1
     },
     {
-      "name": "dfdg",
-      "number": "45646",
-      "experience": "middle",
-      "licence": true,
-      "skills": [
-        "HTML"
-      ],
-      "id": 2
-    },
-    {
-      "name": "dfgdg",
-      "number": "345",
-      "experience": "junior",
-      "licence": true,
-      "skills": [
-        "JS"
-      ],
-      "id": 3
-    },
-    {
-      "name": "dfgdgfgh",
-      "number": "34535456456",
-      "experience": "middle",
-      "licence": true,
-      "skills": [
-        "CSS"
-      ],
-      "id": 4
-    },
-    {
-      "name": "dfgdfg",
-      "number": "45646",
-      "experience": "senior",
-      "licence": true,
-      "skills": [
-        "JS"
-      ],
-      "id": 5
-    },
-    {
-      "name": "ert",
-      "number": "123456",
+      "name": "Anna",
+      "number": "000005",
       "experience": "middle",
       "licence": true,
       "skills": [
         "JS"
       ],
       "id": 6
+    },
+    {
+      "name": "Nick",
+      "number": "34343434",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "Git"
+      ],
+      "id": 7
+    },
+    {
+      "name": "faster",
+      "number": "111110000",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "SCSS"
+      ],
+      "id": 8
+    },
+    {
+      "name": "anton",
+      "number": "0022030",
+      "experience": "middle",
+      "licence": true,
+      "skills": [
+        "React"
+      ],
+      "id": 10
     }
   ]
 }
