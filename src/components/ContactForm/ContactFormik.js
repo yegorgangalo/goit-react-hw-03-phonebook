@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact, patchContact, getItems } from 'redux/contacts';
+import { editContact, addContact, patchContact, getItems } from 'redux/contacts';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
@@ -31,6 +31,7 @@ function ContactFormik({ toggleModal }) {
             contactEditInfo ? onPatchContact({ ...values, id: contactEditInfo.id }) : onAddContact(values);
             setSubmitting(false);
             resetForm(defaultStateValues);
+            dispatch(editContact(null));
             toggleModal();
           }}
         >
